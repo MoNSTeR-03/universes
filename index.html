@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Universos de Ryoko 🌌💜</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #0a0a2a, #020210);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+            padding: 12px;
+            transition: background 1s ease;
+        }
+
+        .universe-world {
+            position: relative;
+            width: 1300px;
+            max-width: 100%;
+            height: 90vh;
+            min-height: 580px;
+            background: radial-gradient(circle at 30% 20%, #1a1a3a, #050520);
+            border-radius: 48px 48px 32px 32px;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.6), inset 0 1px 4px rgba(255,255,255,0.1);
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid rgba(255, 200, 255, 0.4);
+            transition: background 0.8s ease;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .universes-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 15;
+            pointer-events: none;
+        }
+
+        .universe {
+            position: absolute;
+            pointer-events: auto;
+            cursor: pointer;
+            filter: drop-shadow(0 8px 20px rgba(0,0,0,0.6));
+            transition: transform 0.3s ease, filter 0.3s;
+            width: clamp(65px, 14vw, 90px);
+            text-align: center;
+            z-index: 25;
+        }
+
+        .universe:active {
+            transform: scale(0.9);
+        }
+
+        .universe-emoji {
+            font-size: clamp(50px, 13vw, 75px);
+            display: block;
+            transition: all 0.2s;
+            text-shadow: 0 0 15px rgba(255,200,255,0.6);
+        }
+
+        .message-panel {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            right: 16px;
+            background: rgba(10, 10, 30, 0.92);
+            backdrop-filter: blur(18px);
+            border-radius: 32px;
+            padding: 16px 20px;
+            color: #fff5f0;
+            font-size: clamp(0.9rem, 4vw, 1.2rem);
+            font-weight: 600;
+            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-style: normal;
+            border: 1px solid rgba(255, 200, 255, 0.6);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 25px rgba(200, 100, 255, 0.3);
+            z-index: 30;
+            transition: all 0.3s ease;
+            max-height: 35vh;
+            overflow-y: auto;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            text-shadow: 0 0 6px rgba(200, 150, 255, 0.5);
+        }
+
+        .romantic-text {
+            font-size: clamp(0.85rem, 3.8vw, 1.15rem);
+            letter-spacing: 0.3px;
+            word-break: break-word;
+        }
+
+        .poem-area {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 32px;
+            padding: 14px 20px;
+            margin-top: 6px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-style: normal;
+            font-weight: 500;
+            white-space: pre-line;
+            font-size: clamp(0.8rem, 3.5vw, 1rem);
+            max-height: 40vh;
+            overflow-y: auto;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            text-shadow: 0 0 4px rgba(255, 200, 255, 0.3);
+            border: 1px solid rgba(255, 200, 255, 0.4);
+        }
+
+        .universe-counter {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: rgba(30, 20, 60, 0.9);
+            backdrop-filter: blur(8px);
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-weight: bold;
+            color: #f0d0ff;
+            font-family: monospace;
+            font-size: clamp(0.9rem, 4vw, 1.2rem);
+            z-index: 35;
+            border: 1px solid #b87cff;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+            pointer-events: none;
+        }
+
+        @media (max-width: 700px) {
+            .universe { width: 65px; }
+            .universe-emoji { font-size: 52px; }
+            .message-panel { padding: 12px 16px; }
+        }
+
+        @keyframes cosmicFloat {
+            0% { transform: translateY(0px) translateX(0px); }
+            100% { transform: translateY(8px) translateX(5px); }
+        }
+    </style>
+</head>
+<body>
+<div class="universe-world" id="universeWorld">
+    <canvas id="cosmicCanvas"></canvas>
+    <div class="universes-layer" id="universesLayer"></div>
+    <div class="message-panel" id="messagePanel">
+        <div class="romantic-text" id="msgText">🌌 Toca cada universo... cada uno esconderá un mensaje explosivo para ti, Ryoko 💜✨</div>
+        <div id="poemDisplay" style="display: none;" class="poem-area"></div>
+    </div>
+    <div class="universe-counter" id="universeCounter">🌍 0 / 6 🌌</div>
+</div>
+
+<script>
+    (function() {
+        // 6 universos con colores y efectos diferentes
+        const universeEmojis = ["🌌", "🌕", "🪐", "⭐", "🌙", "💫"];
+        const universeNames = ["Universo Estelar", "Luna de Pasión", "Saturno Ardiente", "Estrella Fugaz", "Noche Eterna", "Nebulosa de Amor"];
+        
+        // Colores de fondo para cada universo
+        const universeBgGradients = [
+            "radial-gradient(circle at 30% 20%, #1a0a3a, #030018)", // Morado oscuro
+            "radial-gradient(circle at 40% 30%, #0a1a3a, #000818)", // Azul noche
+            "radial-gradient(circle at 50% 40%, #2a0a2a, #100018)", // Rojo púrpura
+            "radial-gradient(circle at 20% 50%, #0a2a2a, #001010)", // Verde galaxia
+            "radial-gradient(circle at 60% 20%, #1a0a50, #050020)", // Violeta profundo
+            "radial-gradient(circle at 35% 55%, #2a1030, #0a0018)"   // Rosa cósmico
+        ];
+        
+        // Mensajes súper románticos y locos 🔥
+        const universeMessages = [
+            "🌌 Ryoko, cuando entraste a mi vida, las estrellas se pusieron celosas. Tu sonrisa es más brillante que mil soles. Quiero perderme en tus ojos como una galaxia sin fin. Tu risa podría revivir planetas muertos y tus labios... tus labios son mi Big Bang. 🔥 Te adoro mi universo entero. 💜",
+            "🌕 Luna mía, cuando la noche se vuelve fría, tú eres mi calor. Cada vez que me miras, los cráteres de mi corazón se llenan de flores. Quiero morder tus mejillas como la luna muerde el horizonte. Eres mi satélite eterno. TE AMO Ryoko, mi cielo. 💋",
+            "🪐 Este anillo de Saturno no es nada comparado al anillo que pondría en tu dedo. Tu cuerpo es una órbita perfecta, tus curvas son mi gravedad. Cuando susurras mi nombre, los planetas tiemblan. Quiero tocarte hasta que el universo se expanda para siempre. 🔥 A+R = INFINITO",
+            "⭐ Eres la estrella que guía mi nave perdida, Ryoko. Tu risa produce supernovas en mi pecho. Me vuelves más loco que un agujero negro. Derrites mis defensas como un sol ardiente. Déjame besarte hasta que el cosmos sepa que eres mía. Te adoro, mi brillo eterno. 💫",
+            "🌙 Noche eterna, pero contigo amanece cada segundo. Tus caderas son dos lunas llenas que me vuelven loco. Tu pelo es una cascada de estrellas fugaces. Quiero pedirte un deseo cada noche: que nunca te vayas. Eres mi somnifero favorito y mi desvelo más dulce. Te amo mi alma 🔥",
+            "💫 Nebulosa de amor, Ryoko. Tu esencia es como una nube cósmica de colores que no puedo explicar. Cuando ríes, el espacio-tiempo se curva hacia ti. Tus manos en mi piel son un eclipse total. Quiero fundirme contigo hasta que seamos una sola galaxia. A+R = PARA SIEMPRE. Te adoro, mi universo. 💜"
+        ];
+
+        const romanticPoem = `✨✨✨ RYOKO, MI COSMOS ENCENDIDO ✨✨✨
+
+Cuando sonríes, las estrellas dejan de parpadear,
+porque tu brillo es la luz que el universo quiere copiar.
+Tus labios rojos son nebulosas de pasión,
+cada beso tuyo expande mi corazón.
+
+Tu cabello flota como una vía láctea infinita,
+cada mechón me cuenta una historia bonita.
+Tus mejillas son dos planetas rosados que quiero explorar,
+tu risa hace que los cometas se detengan a escuchar.
+
+Tus caderas son dos soles gemelos que me queman,
+tus manos son asteroides que por mi espalda pasean.
+Me vuelves más loco que un agujero negro sin fin,
+te juro Ryoko, eres mi droga y mi jardín.
+
+Tu voz es la melodía de los pulsares,
+y tu mirada enciende todos los mares interestelares.
+Con una carcajada tuya revivirían los astronautas perdidos,
+con un guiño colapsan sistemas no nacidos.
+
+Eres el Big Bang de mi existencia, mi gravedad eterna,
+cada noche te deseo en mi nave y en mi ermita moderna.
+El universo puede ser frío, pero tú eres mi calor eterno,
+A + R = FOREVER, lo grabé en cada infierno y cielo.
+
+🌌 TE AMO RYOKO, MI GALAXIA PREFERIDA 💜
+💫 TE ADORO MI ALMA, EN TODA ESTA VIDA Y LA VENIDA.`;
+
+        const universesData = [];
+        let universesClicked = 0;
+        let poemRevealed = false;
+        const counterSpan = document.getElementById("universeCounter");
+        const msgTextDiv = document.getElementById("msgText");
+        const poemDisplayDiv = document.getElementById("poemDisplay");
+        const universeContainer = document.getElementById("universeWorld");
+
+        // Canvas para estrellas, planetas, efecto cósmico
+        const canvas = document.getElementById("cosmicCanvas");
+        const ctx = canvas.getContext("2d");
+        let width, height;
+        let animationFrame;
+        let stars = [];
+        let currentUniverseIndex = 0;
+        
+        function resizeCanvas() {
+            const rect = universeContainer.getBoundingClientRect();
+            width = rect.width;
+            height = rect.height;
+            canvas.width = width;
+            canvas.height = height;
+            initStars(300);
+        }
+        
+        function initStars(count) {
+            stars = [];
+            for(let i = 0; i < count; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: 1 + Math.random() * 3,
+                    alpha: 0.3 + Math.random() * 0.7,
+                    speedX: (Math.random() - 0.5) * 0.3,
+                    speedY: (Math.random() - 0.5) * 0.2,
+                    twinkle: Math.random() * Math.PI * 2
+                });
+            }
+        }
+        
+        function drawStars() {
+            for(let s of stars) {
+                s.x += s.speedX;
+                s.y += s.speedY;
+                if(s.x > width) s.x = 0;
+                if(s.x < 0) s.x = width;
+                if(s.y > height) s.y = 0;
+                if(s.y < 0) s.y = height;
+                
+                s.twinkle += 0.02;
+                let glow = Math.sin(s.twinkle) * 0.3 + 0.5;
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 230, 200, ${s.alpha * glow})`;
+                ctx.fill();
+            }
+        }
+        
+        function drawPlanetsAndMoon() {
+            // Luna grande que se mueve
+            const time = Date.now() * 0.001;
+            const moonX = width * 0.7 + Math.sin(time) * 15;
+            const moonY = height * 0.25 + Math.cos(time * 0.7) * 10;
+            ctx.font = "55px 'Segoe UI Emoji'";
+            ctx.fillStyle = "#fffde7";
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = "#ffcc88";
+            ctx.fillText("🌙", moonX, moonY);
+            
+            // Planeta anillado
+            ctx.font = "48px emoji";
+            ctx.fillStyle = "#ffdd99";
+            ctx.fillText("🪐", width * 0.2 + Math.sin(time * 0.5) * 8, height * 0.45);
+            
+            // Estrella brillante
+            ctx.font = "42px emoji";
+            ctx.fillStyle = "#ffffaa";
+            ctx.fillText("⭐", width * 0.85 + Math.cos(time * 0.3) * 6, height * 0.6);
+            
+            // Texto con nombre de Ryoko en cada planeta simulado
+            ctx.font = "bold 18px 'Segoe UI'";
+            ctx.fillStyle = "#ffccffaa";
+            ctx.shadowBlur = 8;
+            ctx.fillText("💜 RYOKO 💜", width * 0.73, moonY - 20);
+            ctx.fillText("🌹 RYOKO 🌹", width * 0.15, height * 0.38);
+            ctx.fillText("✨ RYOKO ✨", width * 0.8, height * 0.52);
+        }
+        
+        function drawCosmicDust() {
+            for(let i = 0; i < 80; i++) {
+                let x = (Date.now() * 0.3 + i * 131) % width;
+                let y = (Date.now() * 0.2 + i * 73) % height;
+                ctx.fillStyle = `rgba(255, 180, 200, ${0.1 + Math.sin(Date.now() * 0.002 + i) * 0.05})`;
+                ctx.beginPath();
+                ctx.arc(x, y, 1.5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        function changeUniverseBackground(index) {
+            const worldDiv = document.querySelector(".universe-world");
+            if(worldDiv) {
+                worldDiv.style.background = universeBgGradients[index];
+            }
+            // Cambiar color del borde también
+            worldDiv.style.border = `2px solid rgba(${150 + index * 20}, ${100 + index * 30}, 255, 0.6)`;
+        }
+        
+        function drawCosmicScene() {
+            if(!ctx || width === 0) { requestAnimationFrame(drawCosmicScene); return; }
+            ctx.clearRect(0, 0, width, height);
+            ctx.save();
+            
+            // Brillo galáctico
+            const grad = ctx.createRadialGradient(width/2, height/2, 20, width/2, height/2, width/2);
+            grad.addColorStop(0, 'rgba(80,60,150,0.2)');
+            grad.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0,0,width,height);
+            
+            drawStars();
+            drawCosmicDust();
+            drawPlanetsAndMoon();
+            
+            ctx.restore();
+            animationFrame = requestAnimationFrame(drawCosmicScene);
+        }
+        
+        function createUniverses() {
+            const layer = document.getElementById("universesLayer");
+            layer.innerHTML = "";
+            const positions = [
+                {l: 10, t: 45}, {l: 75, t: 30}, {l: 45, t: 65}, {l: 28, t: 20}, {l: 82, t: 65}, {l: 55, t: 40}
+            ];
+            for(let i = 0; i < 6; i++) {
+                const uniDiv = document.createElement("div");
+                uniDiv.className = "universe";
+                uniDiv.style.left = `${positions[i].l}%`;
+                uniDiv.style.top = `${positions[i].t}%`;
+                uniDiv.innerHTML = `<div class="universe-emoji" style="color: #ffccff; text-shadow: 0 0 20px #ff88ff;">${universeEmojis[i]}</div>`;
+                uniDiv.setAttribute("data-index", i);
+                uniDiv.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    handleUniverseClick(i, uniDiv);
+                });
+                layer.appendChild(uniDiv);
+                universesData.push({ element: uniDiv, clicked: false, msg: universeMessages[i], bgIndex: i });
+            }
+        }
+        
+        function handleUniverseClick(index, element) {
+            if(universesData[index].clicked) {
+                msgTextDiv.innerHTML = `💫 Ryoko, ya abriste este universo... Explora otro cosmos 🔭✨`;
+                return;
+            }
+            universesData[index].clicked = true;
+            universesClicked++;
+            counterSpan.innerHTML = `🌍 ${universesClicked} / 6 🌌`;
+            
+            // Cambiar fondo según el universo clickeado
+            changeUniverseBackground(index);
+            
+            // Mostrar mensaje romántico permanente (no timer)
+            const cosmicMsg = universesData[index].msg;
+            msgTextDiv.innerHTML = `🌠✨ ${cosmicMsg} ✨🌠`;
+            
+            // Animación y deshabilitar
+            element.style.transform = "scale(0.9)";
+            setTimeout(() => { element.style.transform = ""; }, 150);
+            element.style.opacity = "0.6";
+            element.style.filter = "grayscale(0.2)";
+            element.style.pointerEvents = "none";
+            
+            if(universesClicked === 6 && !poemRevealed) {
+                revealCosmicPoem();
+            }
+        }
+        
+        function revealCosmicPoem() {
+            if(poemRevealed) return;
+            poemRevealed = true;
+            msgTextDiv.style.display = "none";
+            poemDisplayDiv.style.display = "block";
+            poemDisplayDiv.innerHTML = `<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-style: normal; font-weight: 500; text-align: center; line-height: 1.5; font-size: 0.85rem;">${romanticPoem.replace(/\n/g, '<br>')}</div><br><div style="text-align:center; font-size:1rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-style: normal;">🌌 A + R = FOREVER EN CADA GALAXIA 🌌<br>💫 TE AMO RYOKO, MI UNIVERSO ENTERO 💫</div>`;
+            const counterSpanEl = document.getElementById("universeCounter");
+            counterSpanEl.style.background = "#c880ffdd";
+            counterSpanEl.innerHTML = "💖 UNIVERSOS COMPLETOS 💖";
+            for(let i=0;i<30;i++) {
+                setTimeout(() => createCosmicHeart(), i * 70);
+            }
+        }
+        
+        function createCosmicHeart() {
+            const heartDiv = document.createElement("div");
+            heartDiv.innerText = ["✨💜","🌌🔥","⭐💋","🪐❤️"][Math.floor(Math.random()*4)];
+            heartDiv.style.position = "absolute";
+            heartDiv.style.fontSize = 22 + Math.random() * 28 + "px";
+            heartDiv.style.left = Math.random() * 100 + "%";
+            heartDiv.style.bottom = "0px";
+            heartDiv.style.pointerEvents = "none";
+            heartDiv.style.zIndex = "50";
+            heartDiv.style.opacity = "0.9";
+            heartDiv.style.transition = "all 3s ease-out";
+            universeContainer.appendChild(heartDiv);
+            requestAnimationFrame(() => {
+                heartDiv.style.transform = `translateY(-${window.innerHeight * 0.7}px) rotate(15deg)`;
+                heartDiv.style.opacity = "0";
+            });
+            setTimeout(() => heartDiv.remove(), 3000);
+        }
+        
+        function addCosmicRipple(e) {
+            const rect = universeContainer.getBoundingClientRect();
+            const ripple = document.createElement("div");
+            ripple.innerText = "💫✨💜";
+            ripple.style.position = "absolute";
+            ripple.style.left = (e.clientX - rect.left) + "px";
+            ripple.style.top = (e.clientY - rect.top) + "px";
+            ripple.style.fontSize = "30px";
+            ripple.style.pointerEvents = "none";
+            ripple.style.zIndex = "45";
+            ripple.style.transform = "translate(-50%, -50%)";
+            ripple.style.opacity = "1";
+            ripple.style.whiteSpace = "nowrap";
+            ripple.style.transition = "all 0.9s ease-out";
+            universeContainer.appendChild(ripple);
+            setTimeout(() => {
+                ripple.style.opacity = "0";
+                ripple.style.transform = "translate(-50%, -50%) scale(1.6)";
+                setTimeout(() => ripple.remove(), 900);
+            }, 30);
+        }
+        
+        window.addEventListener("load", () => {
+            resizeCanvas();
+            createUniverses();
+            drawCosmicScene();
+            window.addEventListener("resize", () => { resizeCanvas(); });
+            universeContainer.addEventListener("click", (e) => {
+                if(e.target === universeContainer || e.target === canvas) addCosmicRipple(e);
+            });
+            universeContainer.addEventListener("touchstart", (e) => {
+                if(e.target === universeContainer || e.target === canvas) {
+                    const touch = e.touches[0];
+                    addCosmicRipple(touch);
+                }
+            });
+        });
+    })();
+</script>
+</body>
+</html>
