@@ -40,7 +40,7 @@
             scrollbar-width: thin;
         }
 
-        /* Fondo optimizado - menos elementos, más impacto visual */
+        /* Fondo con RYOKO loco */
         .sweet-bg {
             position: absolute;
             top: 0;
@@ -52,7 +52,6 @@
             overflow: hidden;
         }
 
-        /* Solo 25 elementos flotantes en lugar de 128 */
         .floating-item {
             position: absolute;
             font-size: 26px;
@@ -61,17 +60,29 @@
             white-space: nowrap;
         }
 
-        .ryoko-name {
+        /* ESTILOS LOCOS PARA RYOKO */
+        .ryoko-crazy {
             position: absolute;
-            font-size: 32px;
             font-weight: bold;
-            font-family: 'Impact', 'Arial Black', sans-serif;
-            color: rgba(255, 200, 150, 0.4);
-            text-shadow: 0 0 12px rgba(255,150,80,0.4);
             white-space: nowrap;
             pointer-events: none;
-            letter-spacing: 3px;
-            animation: sweetPulse 3s infinite alternate;
+            animation: crazyFloat 8s infinite alternate ease-in-out;
+            text-shadow: 0 0 8px currentColor;
+        }
+
+        /* Diferentes estilos para cada tipo de RYOKO */
+        .ryoko-style1 { font-family: 'Impact', 'Arial Black', sans-serif; font-size: 28px; letter-spacing: 5px; }
+        .ryoko-style2 { font-family: 'Courier New', monospace; font-size: 24px; font-style: italic; letter-spacing: 2px; }
+        .ryoko-style3 { font-family: 'Brush Script MT', cursive; font-size: 32px; transform: rotate(-8deg); }
+        .ryoko-style4 { font-family: 'Georgia', serif; font-size: 26px; font-weight: normal; text-decoration: underline wavy; }
+        .ryoko-style5 { font-family: 'Impact', 'Arial Black', sans-serif; font-size: 35px; transform: rotate(5deg); letter-spacing: 8px; }
+        .ryoko-style6 { font-family: monospace; font-size: 22px; font-weight: bold; transform: rotate(-12deg); text-transform: uppercase; }
+        .ryoko-style7 { font-family: 'Segoe UI', sans-serif; font-size: 30px; font-style: oblique; letter-spacing: 3px; }
+        .ryoko-style8 { font-family: 'Arial Black', sans-serif; font-size: 20px; transform: rotate(15deg); word-break: keep-all; }
+
+        @keyframes crazyFloat {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
+            100% { transform: translateY(-25px) rotate(3deg); opacity: 0.55; }
         }
 
         @keyframes floatSweet {
@@ -79,9 +90,9 @@
             100% { transform: translateX(110%) translateY(30px) rotate(8deg); opacity: 0.45; }
         }
 
-        @keyframes sweetPulse {
-            0% { text-shadow: 0 0 5px rgba(255,150,80,0.3); opacity: 0.25; }
-            100% { text-shadow: 0 0 20px rgba(255,150,80,0.6); opacity: 0.45; }
+        @keyframes pulseGlow {
+            0% { text-shadow: 0 0 5px rgba(255,150,80,0.3); opacity: 0.3; }
+            100% { text-shadow: 0 0 25px rgba(255,150,80,0.7); opacity: 0.6; }
         }
 
         /* Capa de postres clickeables */
@@ -99,7 +110,7 @@
         .dessert-item {
             pointer-events: auto;
             cursor: pointer;
-            background: rgba(255, 245, 230, 0.9);
+            background: rgba(255, 245, 230, 0.92);
             backdrop-filter: blur(6px);
             border-radius: 50px;
             padding: 15px 20px;
@@ -191,13 +202,16 @@
             .dessert-emoji { font-size: 50px; }
             .dessert-item { padding: 10px 15px; min-width: 90px; }
             .dessert-name { font-size: 9px; }
-            .ryoko-name { font-size: 22px; }
+            .ryoko-style1 { font-size: 20px; }
+            .ryoko-style2 { font-size: 18px; }
+            .ryoko-style3 { font-size: 22px; }
+            .ryoko-style5 { font-size: 24px; }
+            .ryoko-style7 { font-size: 20px; }
         }
     </style>
 </head>
 <body>
 <div class="dessert-world" id="dessertWorld">
-    <!-- Fondo optimizado -->
     <div class="sweet-bg" id="sweetBg"></div>
 
     <div class="flex-header">
@@ -214,7 +228,6 @@
 
 <script>
     (function() {
-        // 6 postres principales
         const dessertEmojis = ["🍩", "🍰", "🧁", "🥯", "🍫", "🍓"];
         const dessertNames = [
             "Glazed Donut + Boston Cream", 
@@ -272,13 +285,13 @@ eres mi dulce para siempre, mi amor, mi alegría.
         const container = document.getElementById("dessertWorld");
         const bgContainer = document.getElementById("sweetBg");
 
-        // Fondo OPTIMIZADO - solo 35 elementos en total (antes 128!)
-        function createSweetBackground() {
+        // CRAZY RYOKO NAMES - 8 estilos diferentes, 40 textos locos
+        function createCrazyRyokoBackground() {
             bgContainer.innerHTML = "";
             
-            // Postres flotantes (solo 15)
+            // Postres flotantes (light)
             const sweetChars = ["🍩", "🍰", "🧁", "🥯", "🍫", "🍓", "🍪", "🎂", "🍬", "🍭", "🍦", "🥧", "🍮"];
-            for(let i = 0; i < 18; i++) {
+            for(let i = 0; i < 16; i++) {
                 const item = document.createElement("div");
                 item.className = "floating-item";
                 item.textContent = sweetChars[Math.floor(Math.random() * sweetChars.length)];
@@ -290,34 +303,59 @@ eres mi dulce para siempre, mi amor, mi alegría.
                 bgContainer.appendChild(item);
             }
             
-            // Nombres de RYOKO en estilo loco y variado (12 textos)
-            const ryokoStyles = [
+            // TEXTOS DE RYOKO EN ESTILOS LOCOS - 40 elementos
+            const crazyTexts = [
                 "🔥 RYOKO 🔥", "💜 RYOKO 💜", "🍩 RYOKO 🍰", "✨ RYOKO ✨", 
                 "🌙 RYOKO 💕", "🍫 RYOKO 🍓", "⭐ RYOKO ⭐", "💖 RYOKO 💖",
-                "🍩🍰 RYOKO 🧁🍫", "🔥💜 RYOKO 💕🔥", "🍩💕 RYOKO 💕🍩", "💜🔥 RYOKO 🔥💜"
+                "🍩🍰 RYOKO 🧁🍫", "🔥💜 RYOKO 💕🔥", "🍩💕 RYOKO 💕🍩", "💜🔥 RYOKO 🔥💜",
+                "😈 RYOKO 😇", "🌈 RYOKO 🌈", "💎 RYOKO 💎", "🎀 RYOKO 🎀",
+                "🌹 RYOKO 🌹", "🦄 RYOKO 🦄", "🌟 RYOKO 🌟", "💫 RYOKO 💫",
+                "🍬 RYOKO 🍭", "🧁 RYOKO 🍩", "🥧 RYOKO 🎂", "🍪 RYOKO 🍫"
             ];
             
-            for(let i = 0; i < 12; i++) {
+            const styles = [
+                "ryoko-style1", "ryoko-style2", "ryoko-style3", "ryoko-style4",
+                "ryoko-style5", "ryoko-style6", "ryoko-style7", "ryoko-style8"
+            ];
+            
+            const colors = [
+                "#ffaa77", "#ff88aa", "#ffcc66", "#ff9966", 
+                "#dd88ff", "#66ffcc", "#ff6688", "#ffcc88",
+                "#ffaa99", "#99ffaa", "#ff99cc", "#ffe699"
+            ];
+            
+            for(let i = 0; i < 40; i++) {
                 const ryokoDiv = document.createElement("div");
-                ryokoDiv.className = "ryoko-name";
-                ryokoDiv.textContent = ryokoStyles[i % ryokoStyles.length];
+                const styleClass = styles[Math.floor(Math.random() * styles.length)];
+                ryokoDiv.className = `ryoko-crazy ${styleClass}`;
+                ryokoDiv.textContent = crazyTexts[Math.floor(Math.random() * crazyTexts.length)];
                 ryokoDiv.style.left = Math.random() * 100 + "%";
                 ryokoDiv.style.top = Math.random() * 100 + "%";
-                ryokoDiv.style.fontSize = 24 + Math.random() * 32 + "px";
-                ryokoDiv.style.transform = `rotate(${Math.random() * 40 - 20}deg)`;
-                ryokoDiv.style.animationDelay = Math.random() * 3 + "s";
+                ryokoDiv.style.color = colors[Math.floor(Math.random() * colors.length)];
+                ryokoDiv.style.animationDuration = 6 + Math.random() * 10 + "s";
+                ryokoDiv.style.animationDelay = Math.random() * 5 + "s";
+                ryokoDiv.style.opacity = 0.25 + Math.random() * 0.25;
+                ryokoDiv.style.transform = `rotate(${Math.random() * 50 - 25}deg)`;
+                
+                // Algunos con efecto de pulso extra
+                if(i % 5 === 0) {
+                    ryokoDiv.style.animationName = "pulseGlow";
+                    ryokoDiv.style.animationDuration = "2s";
+                    ryokoDiv.style.animationIterationCount = "infinite";
+                    ryokoDiv.style.animationDirection = "alternate";
+                }
                 bgContainer.appendChild(ryokoDiv);
             }
             
             // Corazones flotantes (solo 8)
-            const hearts = ["💜", "🍩", "🍰", "💕", "🍓", "🧁", "💖", "🍫"];
-            for(let i = 0; i < 10; i++) {
+            const hearts = ["💜", "🍩", "🍰", "💕", "🍓", "🧁", "💖", "🍫", "❤️", "💗"];
+            for(let i = 0; i < 12; i++) {
                 const heart = document.createElement("div");
                 heart.className = "floating-item";
                 heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
                 heart.style.left = Math.random() * 100 + "%";
                 heart.style.top = Math.random() * 100 + "%";
-                heart.style.animationDuration = 10 + Math.random() * 15 + "s";
+                heart.style.animationDuration = 8 + Math.random() * 12 + "s";
                 heart.style.animationDelay = Math.random() * 10 + "s";
                 heart.style.fontSize = 28 + Math.random() * 32 + "px";
                 heart.style.opacity = "0.25";
@@ -420,7 +458,7 @@ eres mi dulce para siempre, mi amor, mi alegría.
             }, 30);
         }
 
-        createSweetBackground();
+        createCrazyRyokoBackground();
         createDessertItems();
         
         container.addEventListener("click", (e) => {
