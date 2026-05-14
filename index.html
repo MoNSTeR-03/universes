@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Playa Real - Ryoko & A 💜 Noche Eterna</title>
+    <title>🍰 DULCE PARAÍSO - Ryoko 🍩</title>
     <style>
         * {
             margin: 0;
@@ -14,7 +14,7 @@
         }
 
         body {
-            background: #02040c;
+            background: #1a0a05;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -24,530 +24,451 @@
             padding: 12px;
         }
 
-        .beach-real {
+        .dessert-world {
             position: relative;
-            width: 1300px;
+            width: 1400px;
             max-width: 100%;
             height: 90vh;
-            min-height: 580px;
+            min-height: 620px;
+            background: radial-gradient(ellipse at 30% 40%, #f5d0a9, #e8b88a, #c48a5c);
             border-radius: 48px 48px 32px 32px;
-            overflow: hidden;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,200,0.3);
+            overflow-y: auto;
+            overflow-x: hidden;
             cursor: pointer;
-            box-shadow: 0 25px 45px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,255,255,0.1);
-            border: 1px solid rgba(150, 180, 210, 0.4);
+            border: 3px solid rgba(255, 200, 150, 0.9);
+            scrollbar-width: thin;
         }
 
-        /* Fondo realista: cielo nocturno profundo */
-        .sky-real {
+        /* Fondo dulce con postres y RYOKO */
+        .sweet-bg {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 65%;
-            background: radial-gradient(ellipse at 40% 30%, #0a1a3a, #010510, #000208);
+            min-height: 100%;
             z-index: 1;
+            pointer-events: none;
             overflow: hidden;
         }
 
-        /* Estrellas realistas (miles de puntos) */
-        .stars-real {
+        .floating-dessert {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            z-index: 2;
+            font-size: 28px;
+            opacity: 0.35;
+            animation: floatSweet 18s infinite linear;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
         }
 
-        /* Capa de estrellas con animación de parpadeo */
-        .star-layer {
+        .sweet-text {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(2px 2px at 15% 30%, #fff, rgba(0,0,0,0)),
-                radial-gradient(3px 3px at 75% 45%, #ffe9bb, rgba(0,0,0,0)),
-                radial-gradient(1px 1px at 22% 68%, #ffffff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 88% 12%, #ffffff, rgba(0,0,0,0)),
-                radial-gradient(1px 1px at 55% 83%, #ffefd0, rgba(0,0,0,0)),
-                radial-gradient(3px 3px at 34% 22%, #fff8e7, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 68% 54%, #ffffff, rgba(0,0,0,0)),
-                radial-gradient(1px 1px at 92% 77%, #fff5e0, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 5% 45%, #ffffcc, rgba(0,0,0,0)),
-                radial-gradient(3px 3px at 48% 91%, #fffcdf, rgba(0,0,0,0)),
-                radial-gradient(1px 1px at 62% 19%, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 43% 58%, #ffedb5, rgba(0,0,0,0)),
-                radial-gradient(1px 1px at 77% 33%, #ffffff, rgba(0,0,0,0)),
-                radial-gradient(3px 3px at 19% 85%, #fff5dd, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 51% 11%, #fff0cc, rgba(0,0,0,0));
-            background-repeat: no-repeat;
-            background-size: 250px 250px;
-            opacity: 0.9;
-            animation: twinkleStars 4s infinite alternate;
-        }
-
-        .star-layer2 {
-            background-image: 
-                radial-gradient(1px 1px at 35% 55%, #f0f0ff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 65% 28%, #ffefc0, rgba(0,0,0,0)),
-                radial-gradient(1px 1px at 18% 92%, #ffffff, rgba(0,0,0,0)),
-                radial-gradient(3px 3px at 82% 64%, #fff3d0, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 4% 17%, #fffae6, rgba(0,0,0,0));
-            animation: twinkleStars 6s ease-in-out infinite alternate;
-            opacity: 0.7;
-        }
-
-        @keyframes twinkleStars {
-            0% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
-        /* Luna realista */
-        .moon-real {
-            position: absolute;
-            top: 10%;
-            right: 12%;
-            width: 90px;
-            height: 90px;
-            background: radial-gradient(circle at 30% 35%, #fffbe8, #ffefb0, #e2c27a);
-            border-radius: 50%;
-            box-shadow: 0 0 40px rgba(255, 235, 160, 0.6), 0 0 90px rgba(255, 200, 100, 0.3);
-            z-index: 5;
-            animation: moonGlow 6s infinite alternate;
-        }
-
-        @keyframes moonGlow {
-            0% { box-shadow: 0 0 30px rgba(255, 235, 170, 0.5); transform: scale(1);}
-            100% { box-shadow: 0 0 65px rgba(255, 225, 130, 0.9); transform: scale(1.02);}
-        }
-
-        .moon-real::after {
-            content: "🌙";
-            position: absolute;
-            font-size: 75px;
-            top: -10px;
-            left: 5px;
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
-        /* Océano realista con capas */
-        .ocean-real {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 48%;
-            background: linear-gradient(180deg, #0a2f4a, #021a2a, #000e18);
-            z-index: 3;
-            overflow: hidden;
-        }
-
-        /* Capas de olas en movimiento */
-        .wave {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(transparent 0px, transparent 70px, rgba(80, 160, 210, 0.15) 70px, rgba(100, 180, 230, 0.1) 85px);
-            pointer-events: none;
-        }
-
-        .wave-layer {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 200%;
-            height: 100%;
-            background: repeating-linear-gradient(90deg, 
-                rgba(150, 210, 250, 0.2) 0px, 
-                rgba(90, 170, 230, 0.1) 50px,
-                rgba(200, 230, 255, 0.25) 100px);
-            animation: moveWaves 8s linear infinite;
-            border-radius: 40% 30% 0 0;
-        }
-
-        .wave-layer2 {
-            animation: moveWaves 12s linear infinite reverse;
-            opacity: 0.6;
-            height: 70%;
-            bottom: 5%;
-        }
-
-        @keyframes moveWaves {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* Arena realista */
-        .sand-real {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 28%;
-            background: radial-gradient(ellipse at 30% 80%, #ba8b5a, #8b5e2c, #5a3a1a);
-            z-index: 4;
-            border-radius: 80% 80% 0 0 / 40px 40px 0 0;
-            box-shadow: inset 0 8px 15px rgba(0,0,0,0.3), 0 -5px 10px rgba(0,0,0,0.2);
-        }
-
-        .sand-texture {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: radial-gradient(circle at 15% 40%, rgba(210, 160, 90, 0.4) 1px, transparent 1px);
-            background-size: 12px 12px;
-            pointer-events: none;
-        }
-
-        /* Siluetas de la pareja sentada */
-        .couple-silhouette {
-            position: absolute;
-            bottom: 19%;
-            left: 35%;
-            z-index: 15;
-            display: flex;
-            gap: 30px;
-            align-items: flex-end;
-            filter: drop-shadow(0 8px 15px rgba(0,0,0,0.5));
-        }
-
-        .person {
-            text-align: center;
-        }
-
-        .person .silhouette {
-            font-size: 90px;
-            line-height: 1;
-            text-shadow: 0 3px 5px black;
-            display: block;
-        }
-
-        .person .name {
-            color: rgba(255, 245, 200, 0.85);
-            font-size: 18px;
+            font-size: 38px;
             font-weight: bold;
-            margin-top: -10px;
-            font-family: monospace;
-            letter-spacing: 2px;
-            background: rgba(0,0,0,0.5);
-            padding: 2px 10px;
-            border-radius: 30px;
-            backdrop-filter: blur(2px);
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            color: rgba(255, 180, 120, 0.35);
+            text-shadow: 0 0 15px rgba(255,150,80,0.5);
+            white-space: nowrap;
+            pointer-events: none;
+            letter-spacing: 3px;
+            animation: sweetPulse 3.5s infinite alternate;
         }
 
-        /* Elementos clickeables (conchas, estrellas de mar realistas) */
-        .items-layer {
+        .sweet-heart {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 30%;
+            font-size: 30px;
+            opacity: 0.25;
+            animation: floatHeartSweet 12s infinite alternate;
+        }
+
+        @keyframes floatSweet {
+            0% { transform: translateX(-10%) translateY(0px) rotate(0deg); opacity: 0.25; }
+            100% { transform: translateX(110%) translateY(40px) rotate(10deg); opacity: 0.5; }
+        }
+
+        @keyframes sweetPulse {
+            0% { text-shadow: 0 0 5px rgba(255,150,80,0.3); opacity: 0.2; }
+            100% { text-shadow: 0 0 25px rgba(255,150,80,0.6); opacity: 0.4; }
+        }
+
+        @keyframes floatHeartSweet {
+            0% { transform: translateY(0px) rotate(-5deg); opacity: 0.15; }
+            100% { transform: translateY(-35px) rotate(10deg); opacity: 0.35; }
+        }
+
+        /* Capa de postres clickeables */
+        .dessert-layer {
+            position: relative;
             z-index: 20;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 28px;
+            padding: 50px 20px 200px 20px;
             pointer-events: none;
         }
 
-        .beach-item {
-            position: absolute;
+        .dessert-item {
             pointer-events: auto;
             cursor: pointer;
-            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.4));
-            transition: transform 0.2s ease, filter 0.2s;
-            width: clamp(50px, 11vw, 70px);
-            text-align: center;
-            z-index: 25;
-            transform-origin: center;
-        }
-
-        .beach-item:active {
-            transform: scale(0.9);
-        }
-
-        .item-emoji {
-            font-size: clamp(45px, 10vw, 60px);
-            display: inline-block;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-            transition: all 0.2s;
-            background: rgba(0,0,0,0.2);
-            border-radius: 50%;
-            padding: 5px;
-        }
-
-        /* Panel de mensajes igual que antes */
-        .message-panel {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            background: rgba(8, 18, 35, 0.92);
-            backdrop-filter: blur(20px);
-            border-radius: 36px;
+            background: rgba(255, 245, 230, 0.88);
+            backdrop-filter: blur(8px);
+            border-radius: 56px;
             padding: 18px 22px;
+            text-align: center;
+            transition: all 0.25s ease;
+            border: 2px solid rgba(255, 160, 80, 0.9);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2), 0 0 20px rgba(255,180,100,0.5);
+            min-width: 130px;
+            animation: dessertGlow 2.5s infinite alternate;
+        }
+
+        @keyframes dessertGlow {
+            0% { box-shadow: 0 0 8px rgba(255,160,80,0.5); border-color: rgba(255,160,80,0.7); }
+            100% { box-shadow: 0 0 25px rgba(255,120,50,0.8); border-color: rgba(255,140,70,1); }
+        }
+
+        .dessert-item:active {
+            transform: scale(0.94);
+            background: rgba(255, 245, 230, 0.96);
+        }
+
+        .dessert-emoji {
+            font-size: 70px;
+            display: block;
+            text-shadow: 0 0 12px rgba(255,100,50,0.4);
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
+        }
+
+        .dessert-name {
+            font-size: 12px;
+            color: #7a3a1a;
+            margin-top: 10px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            background: rgba(255,240,210,0.8);
+            padding: 5px 10px;
+            border-radius: 40px;
+        }
+
+        .message-panel {
+            position: sticky;
+            bottom: 15px;
+            margin: 15px;
+            background: rgba(50, 20, 10, 0.94);
+            backdrop-filter: blur(24px);
+            border-radius: 40px;
+            padding: 18px 24px;
             color: #fff5e8;
-            font-size: clamp(0.9rem, 4vw, 1.2rem);
+            font-size: clamp(0.9rem, 4vw, 1.15rem);
             font-weight: 600;
             text-align: center;
-            border: 1px solid rgba(255, 220, 170, 0.7);
-            box-shadow: 0 10px 28px rgba(0,0,0,0.6), 0 0 30px rgba(80, 120, 200, 0.3);
-            z-index: 40;
-            max-height: 32vh;
+            border: 1px solid rgba(255, 180, 100, 0.9);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 30px rgba(255,140,60,0.4);
+            z-index: 45;
+            max-height: 28vh;
             overflow-y: auto;
-            line-height: 1.5;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            text-shadow: 0 0 6px rgba(0,0,0,0.5);
+            line-height: 1.45;
         }
 
         .romantic-text {
-            font-size: clamp(0.85rem, 3.8vw, 1.15rem);
-            letter-spacing: 0.2px;
+            font-size: clamp(0.85rem, 3.8vw, 1.1rem);
         }
 
         .poem-area {
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 32px;
-            padding: 14px 18px;
-            margin-top: 8px;
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 34px;
+            padding: 16px 20px;
+            margin-top: 10px;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             white-space: pre-line;
-            font-size: clamp(0.8rem, 3.5vw, 1rem);
-            max-height: 36vh;
+            font-size: clamp(0.8rem, 3.5vw, 0.98rem);
+            max-height: 32vh;
             overflow-y: auto;
             line-height: 1.5;
-            border: 1px solid rgba(255, 220, 170, 0.5);
+            border: 1px solid rgba(255, 180, 100, 0.7);
+            color: #ffe0c0;
         }
 
-        .item-counter {
-            position: absolute;
-            top: 16px;
+        .counter-badge {
+            position: sticky;
+            top: 15px;
             right: 20px;
-            background: rgba(0, 0, 0, 0.65);
+            float: right;
+            background: rgba(50, 20, 10, 0.92);
             backdrop-filter: blur(12px);
-            padding: 6px 15px;
-            border-radius: 40px;
+            padding: 8px 24px;
+            border-radius: 60px;
             font-weight: bold;
-            color: #ffe6c7;
+            color: #ffcc99;
             font-family: monospace;
-            font-size: 1rem;
-            z-index: 45;
-            border: 1px solid #f7d49c;
-            box-shadow: 0 2px 8px black;
+            font-size: 1.1rem;
+            z-index: 50;
+            border: 1px solid #ffaa66;
+            margin: 15px;
+            display: inline-block;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.3);
             letter-spacing: 1px;
         }
 
-        @media (max-width: 700px) {
-            .beach-item { width: 55px; }
-            .item-emoji { font-size: 48px; }
-            .person .silhouette { font-size: 60px; }
-            .person .name { font-size: 12px; }
-            .moon-real { width: 65px; height: 65px; top: 8%; right: 8%; }
+        .flex-header {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px 25px 0 0;
+        }
+
+        @media (max-width: 780px) {
+            .dessert-emoji { font-size: 52px; }
+            .dessert-item { padding: 12px; min-width: 95px; }
+            .dessert-name { font-size: 9px; }
+            .sweet-text { font-size: 24px; }
         }
     </style>
 </head>
 <body>
-<div class="beach-real">
-    <!-- Cielo real con estrellas -->
-    <div class="sky-real">
-        <div class="stars-real star-layer"></div>
-        <div class="stars-real star-layer2"></div>
+<div class="dessert-world" id="dessertWorld">
+    <!-- Fondo dulce -->
+    <div class="sweet-bg" id="sweetBg"></div>
+
+    <div class="flex-header">
+        <div class="counter-badge" id="dessertCounter">🍩 0 / 6 🍰</div>
     </div>
-    <!-- Luna realista -->
-    <div class="moon-real"></div>
-    
-    <!-- Océano con movimiento -->
-    <div class="ocean-real">
-        <div class="wave-layer"></div>
-        <div class="wave-layer wave-layer2"></div>
-        <div class="wave"></div>
-    </div>
-    
-    <!-- Arena con textura -->
-    <div class="sand-real">
-        <div class="sand-texture"></div>
-    </div>
-    
-    <!-- Silueta de la pareja: A + Ryoko sentados juntos -->
-    <div class="couple-silhouette">
-        <div class="person">
-            <span class="silhouette">🧑‍🦱</span>
-            <div class="name">A</div>
-        </div>
-        <div class="person">
-            <span class="silhouette">👩‍🦰</span>
-            <div class="name">RYOKO ❤️</div>
-        </div>
-    </div>
-    
-    <!-- Elementos interactivos (conchas y estrellas de mar) -->
-    <div class="items-layer" id="itemsLayer"></div>
-    
-    <!-- Panel de mensajes y poema -->
+
+    <div class="dessert-layer" id="dessertLayer"></div>
+
     <div class="message-panel" id="messagePanel">
-        <div class="romantic-text" id="msgText">🌊 Toca cada concha o estrella de mar... cada una guarda una confesión ardiente para ti, Ryoko 🌙✨</div>
+        <div class="romantic-text" id="msgText">🍰🍩 Toca cada postre, donut o pastel... cada uno esconde un mensaje dulce y apasionado para ti, Ryoko 💜✨</div>
         <div id="poemDisplay" style="display: none;" class="poem-area"></div>
     </div>
-    <div class="item-counter" id="itemCounter">🐚 0 / 6 🌙</div>
 </div>
 
 <script>
     (function() {
-        // OBJETOS REALISTAS DE PLAYA
-        const itemEmojis = ["🐚", "⭐", "🐚", "🌊", "🐚", "⭐"];
-        const itemMessages = [
-            "🌙 Ryoko, esta noche la luna nos abraza. Cuando nuestras manos se rozan en la arena siento electricidad pura. Quiero apretar tu cintura mientras las olas nos cantan. Tu risa puede calmar el mar furioso y tus labios son dos olas que quiero besar eternamente. 💜 Te adoro mi alma, aquí junto al mar infinito.",
-            "⭐ Cada estrella que ves fue testigo de cómo me enamoré de ti. Desde que llegaste, el cielo nocturno brilla distinto. Ryoko, tu sonrisa derrite la noche. Cuando te sientas a mi lado, siento que el universo entero nos pertenece. Quiero abrazarte hasta que salga el sol. 🌹🔥",
-            "🐚 Esta concha guarda el eco de tu nombre. Ryoko, eres la marea que sube dentro de mí. Tus caderas son dunas suaves que quiero explorar bajo la luna. Déjame susurrarte al oído cuánto me haces vibrar. No necesito nada más, solo verte sonreír. Eres mi puerto, mi faro. 💋",
-            "🌊 El mar murmuró tu nombre, Ryoko. Cuando estamos cerca, las olas aplauden. Tus manos frías buscando calor en mi pecho me vuelven loco. Quiero recostarme contigo en la arena y contarte que eres la dueña de mis sueños. Esta noche es nuestra, amor. TE AMO con todo el océano dentro. 🔥",
-            "🐚 Esta caracola trajo un mensaje del fondo del mar: Ryoko es única. Tu pelo brilla como reflejos de luna en el agua. Tu cuerpo es una obra de arte que quisiera admirar cada noche. Cuando ríes, hasta los pescadores dejan de pescar para escucharte. Te adoro, mi sirena favorita. 💖",
-            "⭐ Última estrella: Ryoko, eres mi constelación personal. No hay mapa que me pierda porque tus ojos me guían. Cuando caminas descalza por la orilla, la arena te besa los pies como yo quiero besarte a ti. Gracias por esta noche, por existir, por ser mi todo. A+R = POR SIEMPRE 🌙"
+        // 6 postres principales
+        const dessertEmojis = ["🍩", "🍰", "🧁", "🥯", "🍫", "🍓"];
+        const dessertNames = [
+            "Glazed Donut + Boston Cream", 
+            "Jelly Donut + Chocolate Donut", 
+            "Cinnamon Roll + Strawberry Cake", 
+            "Vanilla Donut + Donut Hole", 
+            "Chocolate Cake + Brownie", 
+            "Strawberry Cheesecake + Poke Cake"
+        ];
+        
+        // Mensajes románticos y dulces
+        const dessertMessages = [
+            "🍩 Ryoko, eres más dulce que un glazed donut recién horneado. Cada vez que sonríes, siento que el azúcar se derrite en mi pecho. Quiero morder tus labios como si fueran un Boston cream poke cake, cremosos y adictivos. Eres mi donut favorito, mi dulce obsesión. Te adoro mi alma. 💜",
+            "🍰 Jelly donut, llena de sabor como tú, Ryoko. Tu risa es el relleno de mis días grises. Me encanta cuando te ríes y tus mejillas se ponen rosadas como un pastel de fresa. Eres mi postre prohibido, el que quiero saborear todas las noches. Te amo con toda la dulzura del mundo. 🔥🍓",
+            "🧁 Cinnamon roll, caliente y suave como tu corazón. Ryoko, tu belleza endulza mi vida más que mil pasteles. Cuando me miras, siento que el glaseado de tus ojos me atrapa. Quiero hornear contigo un amor eterno, mezclando canela y pasión. Eres mi rollito de felicidad. 💜🌙",
+            "🥯 Donut de vainilla, simple pero irresistible, como tú. Ryoko, no necesitas nada más para ser perfecta. Tu sonrisa es más adictiva que el chocolate. Cuando caminas, los sprinkles del cielo caen a tus pies. Eres mi donut favorito, mi ancla de dulzura. Te adoro con toda mi alma. 💕",
+            "🍫 Chocolate cake, oscuro e intenso como la pasión que siento por ti, Ryoko. Tus labios saben a brownie recién horneado. Me encanta cuando tus manos recorren mi espalda como glaseado caliente. Eres mi pastel prohibido, mi vicio más delicioso. TE AMO más que a cualquier postre. 🔥💜",
+            "🍓 Strawberry cheesecake, fresca y cremosa como tú, Ryoko. Tu risa sabe a frutos rojos, tu mirada a crema batida. Cuando estás cerca, todo se vuelve más dulce. Eres mi poke cake favorito, mi postre eterno. Esta noche quiero comerte a besos como un donut recién hecho. A+R = FOREVER 🍰💜"
         ];
 
-        const romanticPoem = `🌙✨ RYOKO, MI PLAYA ETERNA ✨🌙
+        const sweetPoem = `🍰🍩 RYOKO, MI PASTEL ETERNO 🍩🍰
 
-La noche nos regala su manto más profundo,
-y tú brillas más que el reflejo de la luna en el agua.
-Tus labios tienen sabor a caramelo salado,
-cada beso tuyo es un faro que enciende mis mares.
+En una panadería del cielo, entre donuts y pasteles,
+apareciste tú, más dulce que mil glaseados.
+Tus ojos son dos cerezas brillantes,
+tus mejillas, crema batida de los ángeles.
 
-Tu cabello se ondula como las olas en calma,
-tus mejillas son dos conchas rosadas que me vuelven loco.
-Cuando entrelazas tus dedos con los míos,
-el mundo se detiene y el viento susurra te amo.
+Ryoko, eres mi Boston cream poke cake favorito,
+mi donut glaseado en las mañanas frías.
+Cuando ríes, los sprinkles caen en cascada,
+y el azúcar se derrite con tus melodías.
 
-Ryoko, tu risa puede resucitar marineros perdidos,
-tu mirada puede calmar tormentas de mil años.
-Acostada en la arena junto a mí,
-haces que las estrellas se pongan de pie para verte.
+Tu boca sabe a fresa y chocolate derretido,
+tus manos son masa suave que quiero amasar.
+Cada vez que me abrazas, soy un cinnamon roll,
+caliente, esponjoso, lleno de felicidad.
 
-Eres mi marea alta y baja, mi latido nocturno.
-Me haces sentir fuego dentro del frío mar.
-Cada curva de tu cuerpo es un tesoro enterrado,
-y yo pasaría siglos buscándote sin cansarme.
+Las velas de los pasteles se encienden por ti,
+porque tu belleza merece mil cumpleaños.
+Eres mi jelly donut, mi relleno favorito,
+el postre que quiero probar todos los años.
 
-A + R = FOREVER, lo escribo en la orilla,
-el agua lo borra pero el viento lo graba en la arena.
-Te adoro, Ryoko, más que a la luna y sus secretos.
-Esta noche es nuestra, como todas las que están por venir.
+A + R = FOREVER, lo escribo con glaseado,
+en cada donut, en cada pastel horneado.
+Te adoro Ryoko, más que a toda la pastelería,
+eres mi dulce para siempre, mi amor, mi alegría.
 
-🌊 TE AMO RYOKO, MI PLAYA, MI CIELO, MI OCÉANO 💜`;
+🍰 TE AMO RYOKO, MI POSTRE FAVORITO 💜
+🍩 TE ADORO MI ALMA, ERES MI DULCE INFINITO.`;
 
-        const itemsData = [];
         let itemsClicked = 0;
         let poemRevealed = false;
-        const counterSpan = document.getElementById("itemCounter");
+        const counterSpan = document.getElementById("dessertCounter");
         const msgTextDiv = document.getElementById("msgText");
         const poemDisplayDiv = document.getElementById("poemDisplay");
+        const container = document.getElementById("dessertWorld");
+        const bgContainer = document.getElementById("sweetBg");
 
-        function createItems() {
-            const layer = document.getElementById("itemsLayer");
-            layer.innerHTML = "";
-            const positions = [
-                {l: 12, t: 72}, {l: 78, t: 68}, {l: 45, t: 75}, 
-                {l: 30, t: 80}, {l: 65, t: 70}, {l: 88, t: 62}
+        // CREAR FONDO DULCE: postres flotantes, RYOKO, corazones
+        function createSweetBackground() {
+            bgContainer.innerHTML = "";
+            
+            // Postres flotantes
+            const sweetChars = [
+                "🍩", "🍰", "🧁", "🥯", "🍫", "🍓", "🍪", "🎂", "🍬", "🍭", 
+                "🧁", "🍩", "🍰", "🍫", "🍓", "🍦", "🥧", "🍮", "🍩", "🍰",
+                "🍪", "🍬", "🍭", "🧁", "🍩", "🍰", "🍫", "🍓", "🍦", "🥧"
             ];
-            for(let i = 0; i < 6; i++) {
-                const itemDiv = document.createElement("div");
-                itemDiv.className = "beach-item";
-                itemDiv.style.left = `${positions[i].l}%`;
-                itemDiv.style.bottom = `${positions[i].t}%`;
-                itemDiv.style.bottom = `${positions[i].t}%`;
-                itemDiv.innerHTML = `<div class="item-emoji">${itemEmojis[i]}</div>`;
-                itemDiv.setAttribute("data-index", i);
-                itemDiv.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    handleItemClick(i, itemDiv);
-                });
-                layer.appendChild(itemDiv);
-                itemsData.push({ element: itemDiv, clicked: false, msg: itemMessages[i] });
+            
+            for(let i = 0; i < 55; i++) {
+                const sweetSpan = document.createElement("div");
+                sweetSpan.className = "floating-dessert";
+                sweetSpan.textContent = sweetChars[i % sweetChars.length];
+                sweetSpan.style.left = Math.random() * 100 + "%";
+                sweetSpan.style.top = Math.random() * 100 + "%";
+                sweetSpan.style.animationDuration = 12 + Math.random() * 22 + "s";
+                sweetSpan.style.animationDelay = Math.random() * 8 + "s";
+                sweetSpan.style.fontSize = 24 + Math.random() * 34 + "px";
+                sweetSpan.style.opacity = 0.25 + Math.random() * 0.25;
+                bgContainer.appendChild(sweetSpan);
+            }
+            
+            // Textos de RYOKO en estilo pastel
+            const sweetTexts = [
+                "🍩 RYOKO 🍰", "💜 RYOKO 🧁", "🍓 RYOKO 🍫", "🎂 RYOKO 🍩", 
+                "✨ RYOKO 💕", "🍬 RYOKO 🍭", "🍰 RYOKO 💜", "🍩 RYOKO 🍓"
+            ];
+            
+            for(let i = 0; i < 28; i++) {
+                const ryokoDiv = document.createElement("div");
+                ryokoDiv.className = "sweet-text";
+                ryokoDiv.textContent = sweetTexts[i % sweetTexts.length];
+                ryokoDiv.style.left = Math.random() * 100 + "%";
+                ryokoDiv.style.top = Math.random() * 100 + "%";
+                ryokoDiv.style.fontSize = 26 + Math.random() * 44 + "px";
+                ryokoDiv.style.transform = `rotate(${Math.random() * 30 - 15}deg)`;
+                ryokoDiv.style.animationDelay = Math.random() * 4 + "s";
+                ryokoDiv.style.animationDuration = 3 + Math.random() * 3 + "s";
+                bgContainer.appendChild(ryokoDiv);
+            }
+            
+            // Corazones dulces
+            const sweetHearts = ["💜", "🍩", "🍰", "💕", "🍓", "🧁", "💖", "🍫"];
+            for(let i = 0; i < 45; i++) {
+                const heartDiv = document.createElement("div");
+                heartDiv.className = "sweet-heart";
+                heartDiv.textContent = sweetHearts[i % sweetHearts.length];
+                heartDiv.style.left = Math.random() * 100 + "%";
+                heartDiv.style.top = Math.random() * 100 + "%";
+                heartDiv.style.fontSize = 28 + Math.random() * 48 + "px";
+                heartDiv.style.animationDuration = 8 + Math.random() * 14 + "s";
+                heartDiv.style.animationDelay = Math.random() * 6 + "s";
+                heartDiv.style.opacity = 0.12 + Math.random() * 0.25;
+                bgContainer.appendChild(heartDiv);
             }
         }
 
-        function handleItemClick(index, element) {
-            if(itemsData[index].clicked) {
-                msgTextDiv.innerHTML = `🌊 Ryoko, ya abriste este tesoro... prueba otra concha o estrella 🌟💜`;
+        function createDessertItems() {
+            const layer = document.getElementById("dessertLayer");
+            layer.innerHTML = "";
+            for(let i = 0; i < 6; i++) {
+                const card = document.createElement("div");
+                card.className = "dessert-item";
+                card.setAttribute("data-idx", i);
+                card.innerHTML = `
+                    <div class="dessert-emoji">${dessertEmojis[i]}</div>
+                    <div class="dessert-name">${dessertNames[i]}</div>
+                `;
+                card.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    handleDessertClick(i, card);
+                });
+                layer.appendChild(card);
+            }
+        }
+
+        function handleDessertClick(idx, element) {
+            if(element.getAttribute("data-clicked") === "true") {
+                msgTextDiv.innerHTML = `🍰 Ryoko, ya probaste este postre... prueba otro de la colección dulce 🍩💜`;
                 return;
             }
-            itemsData[index].clicked = true;
+            element.setAttribute("data-clicked", "true");
             itemsClicked++;
-            counterSpan.innerHTML = `🐚 ${itemsClicked} / 6 🌙`;
+            counterSpan.innerHTML = `🍩 ${itemsClicked} / 6 🍰`;
             
-            const romanticMsg = itemsData[index].msg;
-            msgTextDiv.innerHTML = `🌕✨ ${romanticMsg} ✨🌕`;
+            const sweetMsg = dessertMessages[idx];
+            msgTextDiv.innerHTML = `🍰💜✨ ${sweetMsg} ✨💜🍩`;
             
-            element.style.transform = "scale(0.85)";
-            setTimeout(() => { element.style.transform = ""; }, 150);
-            element.style.opacity = "0.5";
-            element.style.filter = "grayscale(0.3)";
+            element.style.transform = "scale(0.9)";
+            element.style.opacity = "0.65";
+            element.style.filter = "grayscale(0.15)";
             element.style.pointerEvents = "none";
+            setTimeout(() => { element.style.transform = ""; }, 200);
             
             if(itemsClicked === 6 && !poemRevealed) {
-                revealPoem();
+                revealSweetPoem();
             }
         }
 
-        function revealPoem() {
+        function revealSweetPoem() {
             if(poemRevealed) return;
             poemRevealed = true;
             msgTextDiv.style.display = "none";
             poemDisplayDiv.style.display = "block";
-            poemDisplayDiv.innerHTML = `<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-style: normal; font-weight: 500; text-align: center; line-height: 1.5; font-size: 0.85rem;">${romanticPoem.replace(/\n/g, '<br>')}</div><br><div style="text-align:center; font-size:1rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-style: normal;">🐚 A + R = PARA SIEMPRE EN CADA OLA 🌊<br>💜 TE AMO RYOKO, MI PLAYA Y MI CIELO 💜</div>`;
-            counterSpan.style.background = "#9b6effdd";
-            counterSpan.innerHTML = "💖 AMOR ETERNO 💖";
-            for(let i=0;i<28;i++) {
-                setTimeout(() => createHeart(), i*70);
+            poemDisplayDiv.innerHTML = `<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-style: normal; font-weight: 500; text-align: center; line-height: 1.5; font-size: 0.85rem;">${sweetPoem.replace(/\n/g, '<br>')}</div><br><div style="text-align:center; font-size:0.95rem; font-family: monospace;">🍩 A + R = FOREVER EN CADA DONUT 🍰<br>💜 TE AMO RYOKO, MI DULCE INFINITO 💜</div>`;
+            counterSpan.style.background = "#b87542dd";
+            counterSpan.innerHTML = "🍰 DULCE COLECCIÓN 🍩";
+            for(let i=0;i<40;i++) {
+                setTimeout(() => createSweetSpark(), i*70);
             }
         }
 
-        function createHeart() {
-            const heartDiv = document.createElement("div");
-            heartDiv.innerText = ["🌊💜","🐚🔥","⭐💋","🌙❤️"][Math.floor(Math.random()*4)];
-            heartDiv.style.position = "absolute";
-            heartDiv.style.fontSize = 24 + Math.random() * 26 + "px";
-            heartDiv.style.left = Math.random() * 100 + "%";
-            heartDiv.style.bottom = "0px";
-            heartDiv.style.pointerEvents = "none";
-            heartDiv.style.zIndex = "100";
-            heartDiv.style.opacity = "0.85";
-            heartDiv.style.transition = "all 3s ease-out";
-            document.querySelector(".beach-real").appendChild(heartDiv);
+        function createSweetSpark() {
+            const spark = document.createElement("div");
+            spark.innerText = ["🍩💜","🍰💕","🧁❤️","🍫🍓","🍬💖","🍭✨"][Math.floor(Math.random()*6)];
+            spark.style.position = "absolute";
+            spark.style.fontSize = 28 + Math.random() * 32 + "px";
+            spark.style.left = Math.random() * 100 + "%";
+            spark.style.bottom = "0px";
+            spark.style.pointerEvents = "none";
+            spark.style.zIndex = "200";
+            spark.style.opacity = "0.85";
+            spark.style.transition = "all 3.2s ease-out";
+            container.appendChild(spark);
             requestAnimationFrame(() => {
-                heartDiv.style.transform = `translateY(-${window.innerHeight * 0.7}px) rotate(12deg)`;
-                heartDiv.style.opacity = "0";
+                spark.style.transform = `translateY(-${window.innerHeight * 0.75}px) rotate(15deg)`;
+                spark.style.opacity = "0";
             });
-            setTimeout(() => heartDiv.remove(), 3000);
+            setTimeout(() => spark.remove(), 3200);
         }
 
-        function addRipple(e) {
-            const rect = document.querySelector(".beach-real").getBoundingClientRect();
-            const ripple = document.createElement("div");
-            ripple.innerText = "🌊💜🌙";
-            ripple.style.position = "absolute";
-            ripple.style.left = (e.clientX - rect.left) + "px";
-            ripple.style.top = (e.clientY - rect.top) + "px";
-            ripple.style.fontSize = "32px";
-            ripple.style.pointerEvents = "none";
-            ripple.style.zIndex = "100";
-            ripple.style.transform = "translate(-50%, -50%)";
-            ripple.style.opacity = "0.9";
-            ripple.style.whiteSpace = "nowrap";
-            ripple.style.transition = "all 0.8s ease-out";
-            document.querySelector(".beach-real").appendChild(ripple);
+        function addSweetRipple(e) {
+            const rect = container.getBoundingClientRect();
+            const rippleDiv = document.createElement("div");
+            rippleDiv.innerText = "🍩💜🍰";
+            rippleDiv.style.position = "absolute";
+            rippleDiv.style.left = (e.clientX - rect.left) + "px";
+            rippleDiv.style.top = (e.clientY - rect.top) + "px";
+            rippleDiv.style.fontSize = "42px";
+            rippleDiv.style.pointerEvents = "none";
+            rippleDiv.style.zIndex = "200";
+            rippleDiv.style.transform = "translate(-50%, -50%)";
+            rippleDiv.style.opacity = "0.9";
+            rippleDiv.style.whiteSpace = "nowrap";
+            rippleDiv.style.transition = "all 0.7s ease-out";
+            container.appendChild(rippleDiv);
             setTimeout(() => {
-                ripple.style.opacity = "0";
-                ripple.style.transform = "translate(-50%, -50%) scale(1.5)";
-                setTimeout(() => ripple.remove(), 800);
+                rippleDiv.style.opacity = "0";
+                rippleDiv.style.transform = "translate(-50%, -50%) scale(1.6)";
+                setTimeout(() => rippleDiv.remove(), 800);
             }, 30);
         }
 
-        createItems();
-        const beachContainer = document.querySelector(".beach-real");
-        beachContainer.addEventListener("click", (e) => {
-            if(e.target.classList.contains("beach-real") || e.target === beachContainer) addRipple(e);
+        createSweetBackground();
+        createDessertItems();
+        
+        container.addEventListener("click", (e) => {
+            if(e.target === container || e.target.classList.contains("sweet-bg") || e.target.classList.contains("dessert-world")) {
+                addSweetRipple(e);
+            }
         });
-        beachContainer.addEventListener("touchstart", (e) => {
-            if(e.target.classList.contains("beach-real") || e.target === beachContainer) {
+        container.addEventListener("touchstart", (e) => {
+            if(e.target === container || e.target.classList.contains("sweet-bg") || e.target.classList.contains("dessert-world")) {
                 const touch = e.touches[0];
-                addRipple(touch);
+                addSweetRipple(touch);
             }
         });
     })();
